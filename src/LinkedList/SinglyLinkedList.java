@@ -62,6 +62,7 @@ public class SinglyLinkedList {
     // 연결 리스트의 값을 차례대로 출력하는 메서드
     void print() {
         Node node = start;
+        System.out.printf("size: %d | ", size);
         while (node != null) {
             System.out.printf(node.data+" ");
             node = node.next;

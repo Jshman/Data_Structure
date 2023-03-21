@@ -9,14 +9,17 @@ public class MainLinkedList {
 
         String str;
         String[] stringlist;
+        int count = 0;
         while((str = br.readLine()) != null){
             ll = new SinglyLinkedList();
 
+            System.out.printf("[%d번 째 줄 리스트]\n", ++count);
             stringlist = str.split(" ");
             for (String tmp : stringlist) {
                 ll.insert(Integer.parseInt(tmp));
+                ll.print();
             }
-            ll.print();
+            System.out.println("= = = = = = = = = = = = = =");
         }
     }
 }
