@@ -1,8 +1,7 @@
 import java.util.*;
-import java.io.*;
 import java.util.stream.IntStream;
 
-public class SequentialSearch {
+public class BinarySearch {
     public static void main(String[] args) {
         int tmp;
         int target;
