@@ -61,7 +61,7 @@ public class DoublyLinkedList {
     public Node delete(int index) {
         if (size-1 < index) {
 //            System.out.println("리스트의 size보다 큰 index를 입력했습니다.");
-            System.out.println("You entered the index bigger than size of list.");
+            System.out.println("You have entered an index larger than the size of the list.");
             return null;
         }
         Node target = getNode(index);
