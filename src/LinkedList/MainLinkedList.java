@@ -19,7 +19,10 @@ public class MainLinkedList {
             for (String tmp : stringlist) {
                 dl.insert(Integer.parseInt(tmp));
             }
-            dl.printPrevious();
+            dl.printForward();
+            System.out.println("= = = = = = = = = = = = = =");
+            dl.delete(2);
+            dl.printForward();
             System.out.println("= = = = = = = = = = = = = =");
         }
     }
