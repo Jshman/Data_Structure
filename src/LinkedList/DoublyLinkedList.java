@@ -63,10 +63,24 @@ public class DoublyLinkedList {
             System.out.println("Invalid index entered.");
             return null;
         }
-        Node target = getNode(index);
-        target.previous.next = target.next;
-        target.next.previous = target.previous;
-        System.out.println("delete completion");
+        Node target = getNode(index); // target이 head 또는 tail인 경우가 존재
+
+        // head인 경우
+        if (target.previous == null) {
+            head = target.next;
+            target.next.previous = null;
+        }
+        // tail인 경우
+        else if (target.next == null) {
+            tail = target.previous;
+            target.previous.next = null;
+        }
+        // 나머지의 경우
+        else {
+            target.previous.next = target.next;
+            target.next.previous = target.previous;
+            System.out.println("delete completion");
+        }
         return target;
     }
 
@@ -76,13 +90,30 @@ public class DoublyLinkedList {
         if (index < 0 || size-1 < index){
             return null;
         }
-
-        Node node = head;
-        int idx = 0;
-        while (idx++ < index){
-            node = node.next;
+        Node node = null;
+        if (index < size/2) {
+            node = searchForward(index);
+        } else {
+            node = searchBackward(index);
         }
         return node;
+    }
+
+    private Node searchForward(int index) {
+        Node current = head;
+        int idx = 0;
+        while (idx++ < index){
+            current = current.next;
+        }
+        return current;
+    }
+    private Node searchBackward(int index) {
+        Node current = tail;
+        int idx = size-1;
+        while (idx-- > index) {
+            current = current.previous;
+        }
+        return current;
     }
 
     public void printForward() {
