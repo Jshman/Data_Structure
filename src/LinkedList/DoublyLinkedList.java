@@ -58,13 +58,51 @@ public class DoublyLinkedList {
 
     }
 
-    public void printPrevious() {
+    public Node delete(int index) {
+        if (size-1 < index) {
+//            System.out.println("리스트의 size보다 큰 index를 입력했습니다.");
+            System.out.println("You entered the index bigger than size of list.");
+            return null;
+        }
+        Node target = getNode(index);
+        target.previous.next = target.next;
+        target.next.previous = target.previous;
+        System.out.println("delete completion");
+        return target;
+    }
+
+    public Node getHead() {return head;}
+    public Node getTail() {return tail;}
+    public Node getNode(int index) {
+        if (size-1 < index) {
+            return tail;
+        }
+
+        Node node = head;
+        int idx = 0;
+        while (idx++ < index){
+            node = node.next;
+        }
+        return node;
+    }
+
+    public void printForward() {
         Node node = head;
         int count = 1;
+        System.out.println("[print Forward 실행]");
         while (node != null) {
             System.out.printf("%d번째 노드 | data : %d\n", count++, node.data);
             node = node.next;
         }
 //        System.out.println("= = = = = = = = = = = = = = = = = = = = = = =");
+    }
+    public void printBackward() {
+        Node node = tail;
+        int count = 1;
+        System.out.println("[print Backward 실행]");
+        while (node != null) {
+            System.out.printf("%d번째 노드 | data : %d\n", count++, node.data);
+            node = node.previous;
+        }
     }
 }
