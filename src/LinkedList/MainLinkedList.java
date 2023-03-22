@@ -21,7 +21,7 @@ public class MainLinkedList {
             }
             dl.printForward();
             System.out.println("= = = = = = = = = = = = = =");
-            dl.delete(2);
+            dl.delete(4);
             dl.printForward();
             System.out.println("= = = = = = = = = = = = = =");
         }
