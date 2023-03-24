@@ -4,26 +4,26 @@ import java.io.*;
 
 public class MainLinkedList {
     public static void main(String[] args) throws IOException {
-        SinglyLinkedList ll = null;
-        DoublyLinkedList dl = null;
+        CircularLinkedList cl;
         BufferedReader br = new BufferedReader(new FileReader("C:\\Users\\user\\IdeaProjects\\testProject\\src\\LinkedList\\input.txt"));
 
         String str;
         String[] stringlist;
         int count = 0;
         while ((str = br.readLine()) != null) {
-            dl = new DoublyLinkedList();
-
-            System.out.printf("[%d번 째 줄 리스트]\n", ++count);
             stringlist = str.split(" ");
-            for (String tmp : stringlist) {
-                dl.insert(Integer.parseInt(tmp));
+            cl = new CircularLinkedList();
+            for (String s : stringlist) {
+                cl.insert(Integer.parseInt(s));
+//                System.out.println("= = = = = = = = = = = = = = = =");
             }
-            dl.printForward();
-            System.out.println("= = = = = = = = = = = = = =");
-            dl.delete(4);
-            dl.printForward();
-            System.out.println("= = = = = = = = = = = = = =");
+            cl.print();
+            cl.delete(1);
+            cl.delete(5);
+            cl.delete(10);
+            cl.delete(100);
+            System.out.println("= = = = = = = = = = = = = = = =");
+            cl.print();
         }
     }
 }
