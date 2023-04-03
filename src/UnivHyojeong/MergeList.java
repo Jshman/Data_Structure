@@ -1,6 +1,19 @@
 package UnivHyojeong;
 
 public class MergeList {
+    private class Node {
+        int value;
+        Node next;
+
+        public Node(int value) {
+            this.value = value;
+            this.next = null;
+        }
+        public int getValue(){
+            count++;
+            return value;
+        }
+    }
     protected Node firsthead;
     protected Node secondhead;
     private int size1, size2, count;
@@ -55,6 +68,7 @@ public class MergeList {
             Mergehead = cur_first;
             if (cur_first.value == cur_second.value) {
                 cur_second = cur_second.next;
+                count++;
             }
             cur_first = cur_first.next;
             count++;
@@ -64,45 +78,46 @@ public class MergeList {
             count++;
         }
 
-        Node node = Mergehead;
+        firsthead = Mergehead;
+        secondhead = null;
         try {
             /* MergeSort의 Merge 메소드를 활용하여 구현 */
             for (;;) {
                 if (cur_first.value <= cur_second.value) {
                     if (cur_first.value == cur_second.value) {
-                        cur_second = cur_second.next;
+                        cur_second = cur_second.next;       // 다음 노드로 이동
+                        count++;
                     }
                     if (Mergehead.value == cur_first.value) {
-                        cur_first = cur_first.next;
+                        cur_first = cur_first.next;     // 다음 노드로 이동
+                        count++;
                         continue;
                     }
                     Mergehead.next = cur_first;
-                    cur_first = cur_first.next;
+                    cur_first = cur_first.next;     // 다음 노드로 이동
+                    count++;
                 } else if (cur_first.value > cur_second.value) {
                     if (Mergehead.value == cur_second.value) {
-                        cur_second = cur_second.next;
+                        cur_second = cur_second.next;       // 다음 노드로 이동
+                        count++;
                         continue;
                     }
                     Mergehead.next = cur_second;
-                    cur_second = cur_second.next;
+                    cur_second = cur_second.next; // 다음 노드로 이동
+                    count++;
                 }
                 Mergehead = Mergehead.next;
-                count++;
             }
         } catch (NullPointerException e) {
+            count++;
             if (cur_first == null) {
                 Mergehead.next = cur_second;
+                count++;
             } else if (cur_second == null) {
                 Mergehead.next = cur_first;
+                count++;
             }
         }
-
-//        while (node != null) {
-//            System.out.println(node.value);
-//            node = node.next;
-//        }
-        firsthead = node;
-        secondhead = null;
    }
 
     public void printall() {
