@@ -11,7 +11,8 @@ public class MainJava {
         bst.preOrder();
         bst.inOrder();
         bst.postOrder();
-        System.out.println(bst.search(10));
-
+//        bst.inOrder();
+        bst.delete(1);
+        bst.inOrder();
     }
 }
