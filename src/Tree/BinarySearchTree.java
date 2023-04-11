@@ -105,55 +105,151 @@ public class BinarySearchTree {
 
 
     public void delete(Node target) {
-        Node cur = root;
+        Node current = root;
         System.out.printf("\n[from delete] Attempted to delete the target(%d).\n\n", target.getData());
         if (!search(target)) {
             System.out.println("[from delete] Couldn't find the target node.");
             return;
         }
 
-        // 현재 노드의 자식 노드 중 target이 있는지 확인한다.
-        // target은 자식 노드를 가지는지 확인한다.
-        while (cur != null) {
-            if (target.getData() < cur.getData()) {
-                cur = cur.getLeft();
-            } else if (target.getData() > cur.getData()) {
-                cur = cur.getRight();
-            } else {
-                // 트리의 root 노드를 지우는 경우이다.
-                // 오른쪽 서브트리에서 가장 작은 값을 찾아서 root node와 자리를 바꾼다.
-                // 그 노드의 오른쪽 자식과 부모노드를 잇는다.
-                remove(cur.getRight());
-                return;
+        // case 1: target이 root node일때
+        if (current.getData() == target.getData()) {
+            // case 1-1: root node가 leaf 노드일때
+            if (current.getLeft() == null && current.getRight() == null) {
+                root = null;
+            }
+            // case 1-2: root node의 자식이 둘 일때
+            else if (current.getRight() != null && current.getLeft() != null) {
+                // 오른쪽 서브트리에서 min 값을 찾아 root노드와 자리를 바꾼다.
+                // 이때 min값의 parent도 알아야 한다.
+                Node min = current;
+                Node minParent = current;
+
+                while (min.getLeft() != null) {
+                    minParent = min;
+                    min = min.getLeft();
+                }
+
+                minParent.setLeft(min.getRight());
+                min.setLeft(current.getLeft());
+                min.setRight(current.getRight());
+
+                root = min;
+            }
+            // case 1-3: root node의 자식이 하나 일때
+            else if (current.getRight() != null) {
+                //왼쪽 자식
+                Node max = current;
+                Node maxParent = current;
+
+                while (max.getRight() != null) {
+                    maxParent = max;
+                    max = max.getRight();
+                }
+
+                maxParent.setRight(max.getLeft());
+                max.setLeft(current.getLeft());
+                max.setRight(current.getRight());
+
+                root = max;
+            }
+            else if (current.getLeft() != null) {
+                //오른쪽 자식
+                Node min = current;
+                Node minParent = current;
+
+                while (min.getLeft() != null) {
+                    minParent = min;
+                    min = min.getLeft();
+                }
+
+                minParent.setRight(min.getRight());
+                min.setLeft(current.getLeft());
+                min.setRight(current.getRight());
+
+                root = min;
+            }
+            return;
+        }
+
+        Node currentParent = current;
+        while (current.getData() != target.getData()) {
+            currentParent = current;
+            if (target.getData() < current.getData()) {
+                current = current.getLeft();
+            } else if (target.getData() > current.getData()) {
+                current = current.getRight();
             }
         }
 
-    }
-
-    /* subRoot: 서브트리의 root node */
-    private void remove(Node subRoot) {
-        if (subRoot == null) return;
-
-        Node parent = subRoot; // 자식 노드의 부모 노드
-        Node child = subRoot.getLeft(); // (지워질)자식 노드
-
-        // 서브트리가 없음
-        if (child == null) {
-            child = parent;
+        // case 2: target이 leaf node일때
+        if (current.getRight() == null && current.getLeft() == null) {
+            //case 2-1: target이 parent의 오른쪽 자식인 경우
+            if (current == currentParent.getRight()) {
+                currentParent.setRight(null);
+            }
+            //case 2-2: target이 parent의 왼쪽 자식인 경우
+            else if (current == currentParent.getLeft()) {
+                currentParent.setLeft(null);
+            }
+            return;
         }
 
-        while (child.getLeft() != null) {
-            child = child.getLeft();
-            parent = parent.getLeft();
+        // case 3: target이 subtree의 root node일때
+        // case1과 같이 만든다.
+        if (current.getLeft() == null && current.getRight() == null) {
+            current = null;
         }
+        // case 3-2: target node의 자식이 둘 일때
+        else if (current.getRight() != null && current.getLeft() != null) {
+            // 오른쪽 서브트리에서 min 값을 찾아 root노드와 자리를 바꾼다.
+            // 이때 min값의 parent도 알아야 한다.
+            Node min = current.getRight();
+            Node minParent = current;
 
-        subRoot.setData(child.getData());
-        if (child.getRight() == null) {
-            // child의 오른쪽 자식이 없음.
-            parent.setLeft(null);
-        } else {
-            // child의 오른쪽 자식이 있음.
-            parent.setLeft(child.getRight());
+            while (min.getLeft() != null) {
+                minParent = min;
+                min = min.getLeft();
+            }
+
+            minParent.setLeft(min.getRight());
+            min.setLeft(current.getLeft());
+            min.setRight(current.getRight());
+
+            currentParent.setRight(min);
+        }
+        // case 3-3: target node의 자식이 하나 일때
+        else if (current.getRight() != null) {
+            //왼쪽 자식
+            Node max = current.getLeft();
+            Node maxParent = current;
+
+            while (max.getRight() != null) {
+                maxParent = max;
+                max = max.getRight();
+            }
+
+            maxParent.setRight(max.getLeft());
+            max.setLeft(current.getLeft());
+            max.setRight(current.getRight());
+
+            currentParent.setLeft(max);
+        }
+        else if (current.getLeft() != null) {
+            //오른쪽 자식
+            Node min = current.getRight();
+            Node minParent = current;
+
+            while (min.getLeft() != null) {
+                minParent = min;
+                min = min.getLeft();
+            }
+
+            minParent.setRight(min.getRight());
+            min.setLeft(current.getLeft());
+            min.setRight(current.getRight());
+
+            currentParent.setLeft(min);
         }
     }
 

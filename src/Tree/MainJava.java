@@ -12,6 +12,7 @@ public class MainJava {
         bst.inOrder();
         bst.postOrder();
 //        bst.inOrder();
+//        bst.delete(4);
         bst.delete(1);
         bst.inOrder();
     }
