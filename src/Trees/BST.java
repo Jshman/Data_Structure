@@ -88,10 +88,71 @@ public class BST {
         return targetNode;
     }
 
+    //자식 노드가 2개인데, 제일 작은 노드가 자식 노드가 아닐 때
     private Node case31(Node targetNode){
+        Node parrent = targetNode.getParent();
+
+        Node rightSubTreeNodeParrent = targetNode.getRight();
+        Node rightSubTreeNode = targetNode.getRight().getLeft();
+        while (rightSubTreeNode.getLeft() != null) {
+            rightSubTreeNodeParrent = rightSubTreeNode;
+            rightSubTreeNode = rightSubTreeNode.getLeft();
+        }
+        // 노드와 부모 노드의 연결을 끊는다.
+        rightSubTreeNodeParrent.setLeft(null);
+        
+        // targetNode의 자식노드들의 부모노드를 rightSubTreeNode로 설정한다.
+        targetNode.getRight().setParent(rightSubTreeNode);
+        targetNode.getLeft().setParent(rightSubTreeNode);
+
+        //rightSubTreeNode의 왼쪽 자식을 targetNode의 왼쪽 자식으로, 오른쪽 자식은 오른쪽 자식으로 설정한다.
+        rightSubTreeNode.setLeft(targetNode.getRight());
+        rightSubTreeNode.setRight(targetNode.getLeft());
+
+        //targetNode의 양쪽자식을 null로 설정한다.
+        targetNode.setLeft(null);
+        targetNode.setRight(null);
+
+        // 지우려는 노드가 root 노드라면
+        if (parrent == null) {setRoot(rightSubTreeNode);}
+        else {
+            // 아니라면 부모노드와 이어줘야 됨.
+            rightSubTreeNode.setParent(parrent);
+
+            //parrent의 왼쪽 자식이면
+            if (parrent.getLeft().getData() == targetNode.getData()) {parrent.setLeft(rightSubTreeNode);}
+            else {parrent.setRight(rightSubTreeNode);}
+        }
+
         return targetNode;
     }
+   
+    //자식 노드가 2개인데, 제일 작은 노드가 자식 노드일 때
     private Node case32(Node targetNode){
+        Node parrent = targetNode.getParent();
+        Node rightNode = targetNode.getRight();
+        
+        // targetNode가 root가 아니면
+        if (parrent != null) {
+            if (parrent.getLeft().getData() == targetNode.getData()) {parrent.setLeft(rightNode);}
+            else {parrent.setRight(rightNode);}
+
+            rightNode.setParent(parrent);
+        }
+        // root 가 맞다면
+        else {
+            setRoot(rightNode);
+            rightNode.setParent(null);
+        }
+
+        rightNode.setLeft(targetNode.getLeft());
+        targetNode.getLeft().setParent(rightNode);
+        
+        targetNode.setParent(null);
+        targetNode.setRight(null);
+        targetNode.setLeft(null);
+    
+
         return targetNode;
     }
 
@@ -101,14 +162,15 @@ public class BST {
 
         Node curNode = this.root;
         // 목표노드를 찾는다.
-        while (curNode != null || target.getData() == curNode.getData()) { 
-            if (target.getData() <= curNode.getData()) {curNode = curNode.getLeft();}
+        while (curNode != null) { 
+            if (target.getData() == curNode.getData()) {break;}
+            else if (target.getData() <= curNode.getData()) {curNode = curNode.getLeft();}
             else if (target.getData() > curNode.getData()) {curNode = curNode.getRight();}
         }
-        if (curNode == null) {
-            // Not Found
-            return null;
-        }
+
+        //Not Found
+        if (curNode == null) {return null;}
+
         // 목표노드가 자식노드를 가지고 있는지 파악한다.
         if (curNode.getLeft() == null && curNode.getRight() == null){
             return case1(curNode);
@@ -119,7 +181,6 @@ public class BST {
             return case2(curNode);
         }
 
-        // Not Found
         return null;
     }
 
