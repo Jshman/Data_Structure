@@ -3,9 +3,9 @@ package Trees;
 public class BST {
     private Node root;
 
-    private void setRoot(Node node) {
-        this.root = node;
-    }
+    private void setRoot(Node node) {this.root = node;}
+    public Node getRoot() {return this.root;}
+    
     // 삽입
     public void insert(int data) {
         insert(new Node(data));
