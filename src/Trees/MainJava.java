@@ -1,8 +1,8 @@
-package Tree;
+package Trees;
 
 public class MainJava {
     public static void main(String args[]) {
-        BinarySearchTree bst = new BinarySearchTree();
+        BST bst = new BST();
         int[] arr = {5, 4, 1, 2, 7, 9, 10, 3, 0, 6, 8};
 
         for (int n : arr) {
