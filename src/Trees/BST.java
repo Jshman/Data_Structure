@@ -46,10 +46,10 @@ public class BST {
     private Node case1(Node targetNode){
         if (targetNode.getData() == this.root.getData()) {setRoot(null);;}
 
-        Node parrent = targetNode.getParent();
+        Node parent = targetNode.getParent();
 
-        if (parrent.getLeft().getData() == targetNode.getData()) {parrent.setLeft(null);}
-        else {parrent.setRight(null);}
+        if (parent.getLeft().getData() == targetNode.getData()) {parent.setLeft(null);}
+        else {parent.setRight(null);}
 
         targetNode.setParent(null);
 
@@ -58,14 +58,14 @@ public class BST {
     
     // 자식 노드가 1개인 경우
     private Node case2(Node targetNode){
-        Node parrent = targetNode.getParent();
+        Node parent = targetNode.getParent();
 
         Node targetNodeChild = null;
         if (targetNode.getLeft() != null) {targetNodeChild = targetNode.getLeft();}
         else {targetNodeChild = targetNode.getRight();}
 
         // targetNode가 root인 경우
-        if (parrent == null) {
+        if (parent == null) {
             targetNodeChild.setParent(null);
             setRoot(targetNodeChild);
 
@@ -75,11 +75,11 @@ public class BST {
         }
 
         // 부모노드의 왼쪽 자식이면
-        if (parrent.getLeft().getData() == targetNode.getData()) {parrent.setLeft(targetNodeChild);}
+        if (parent.getLeft().getData() == targetNode.getData()) {parent.setLeft(targetNodeChild);}
         // 오른쪽 자식이면
-        else {parrent.setRight(targetNodeChild);}
+        else {parent.setRight(targetNodeChild);}
 
-        targetNodeChild.setParent(parrent);
+        targetNodeChild.setParent(parent);
 
         targetNode.setParent(null);
         targetNode.setLeft(null);
@@ -90,38 +90,39 @@ public class BST {
 
     //자식 노드가 2개인데, 제일 작은 노드가 자식 노드가 아닐 때
     private Node case31(Node targetNode){
-        Node parrent = targetNode.getParent();
+        Node parent = targetNode.getParent();
 
-        Node rightSubTreeNodeParrent = targetNode.getRight();
+        Node rightSubTreeNodeParent = targetNode.getRight();
         Node rightSubTreeNode = targetNode.getRight().getLeft();
         while (rightSubTreeNode.getLeft() != null) {
-            rightSubTreeNodeParrent = rightSubTreeNode;
+            rightSubTreeNodeParent = rightSubTreeNode;
             rightSubTreeNode = rightSubTreeNode.getLeft();
         }
         // 노드와 부모 노드의 연결을 끊는다.
-        rightSubTreeNodeParrent.setLeft(null);
+        rightSubTreeNodeParent.setLeft(rightSubTreeNode.getRight());
+        if (rightSubTreeNode.getRight() != null) {rightSubTreeNode.setParent(rightSubTreeNodeParent);}
         
         // targetNode의 자식노드들의 부모노드를 rightSubTreeNode로 설정한다.
         targetNode.getRight().setParent(rightSubTreeNode);
         targetNode.getLeft().setParent(rightSubTreeNode);
 
         //rightSubTreeNode의 왼쪽 자식을 targetNode의 왼쪽 자식으로, 오른쪽 자식은 오른쪽 자식으로 설정한다.
-        rightSubTreeNode.setLeft(targetNode.getRight());
-        rightSubTreeNode.setRight(targetNode.getLeft());
+        rightSubTreeNode.setLeft(targetNode.getLeft());
+        rightSubTreeNode.setRight(targetNode.getRight());
 
         //targetNode의 양쪽자식을 null로 설정한다.
         targetNode.setLeft(null);
         targetNode.setRight(null);
 
         // 지우려는 노드가 root 노드라면
-        if (parrent == null) {setRoot(rightSubTreeNode);}
+        if (parent == null) {setRoot(rightSubTreeNode);}
         else {
             // 아니라면 부모노드와 이어줘야 됨.
-            rightSubTreeNode.setParent(parrent);
+            rightSubTreeNode.setParent(parent);
 
-            //parrent의 왼쪽 자식이면
-            if (parrent.getLeft().getData() == targetNode.getData()) {parrent.setLeft(rightSubTreeNode);}
-            else {parrent.setRight(rightSubTreeNode);}
+            //parent의 왼쪽 자식이면
+            if (parent.getLeft().getData() == targetNode.getData()) {parent.setLeft(rightSubTreeNode);}
+            else {parent.setRight(rightSubTreeNode);}
         }
 
         return targetNode;
@@ -129,15 +130,15 @@ public class BST {
    
     //자식 노드가 2개인데, 제일 작은 노드가 자식 노드일 때
     private Node case32(Node targetNode){
-        Node parrent = targetNode.getParent();
+        Node parent = targetNode.getParent();
         Node rightNode = targetNode.getRight();
         
         // targetNode가 root가 아니면
-        if (parrent != null) {
-            if (parrent.getLeft().getData() == targetNode.getData()) {parrent.setLeft(rightNode);}
-            else {parrent.setRight(rightNode);}
+        if (parent != null) {
+            if (parent.getLeft().getData() == targetNode.getData()) {parent.setLeft(rightNode);}
+            else {parent.setRight(rightNode);}
 
-            rightNode.setParent(parrent);
+            rightNode.setParent(parent);
         }
         // root 가 맞다면
         else {
