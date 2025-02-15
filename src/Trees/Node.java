@@ -1,10 +1,10 @@
 package Trees;
 
 class Node {
-    private int data;
-    private Node left;
-    private Node right;
-    private Node parent;
+    protected int data;
+    protected Node left;
+    protected Node right;
+    protected Node parent;
 
     Node(int data) {
         this.data = data;

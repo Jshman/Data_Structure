@@ -1,9 +1,9 @@
 package Trees;
 
 public class BST {
-    private Node root;
+    protected Node root;
 
-    private void setRoot(Node node) {this.root = node;}
+    protected void setRoot(Node node) {this.root = node;}
     public Node getRoot() {return this.root;}
     
     // 삽입
