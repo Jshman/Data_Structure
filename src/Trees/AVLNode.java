@@ -1,7 +1,7 @@
 package Trees;
 
 class AVLNode extends Node{
-    private int leftHeight, rightHeight;
+    protected int leftHeight, rightHeight;
 
     AVLNode(int data) {
         super(data);
