@@ -7,14 +7,14 @@ public class BST {
     public Node getRoot() {return this.root;}
     
     // 삽입
-    public void insert(int data) {
-        insert(new Node(data));
+    public Node insert(int data) {
+        return insert(new Node(data));
     }
 
-    public void insert(Node node) {
+    public Node insert(Node node) {
         if (this.root == null) {
             this.root = node;
-            return;
+            return this.root;
         }
         
         Node cur = this.root;
@@ -23,18 +23,19 @@ public class BST {
                 if (cur.getLeft() == null) {
                     cur.setLeft(node);
                     node.setParent(cur);
-                    return;
+                    return cur.getLeft();
                 }
                 cur = cur.getLeft();
             } else if (cur.getData() < node.getData()) {
                 if (cur.getRight() == null) {
                     cur.setRight(node);
                     node.setParent(cur);
-                    return;
+                    return node;
                 }
                 cur = cur.getRight();
             }   
         }
+        return node;
     }
 
     // 삭제

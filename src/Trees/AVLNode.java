@@ -10,8 +10,8 @@ class AVLNode extends Node{
     }
 
     public int getLeftHeight() {return this.leftHeight;}
-    public int gerRightHeight() {return this.rightHeight;}
-
+    public int getRightHeight() {return this.rightHeight;}
+    public int getHeight() {return Math.max(this.leftHeight, this.rightHeight) + 1;}
 
     // 삽입, 삭제 처럼 트리 모양에 변화가 생기는 상황에 계속 사용.
     public void updateHeight() {
@@ -21,6 +21,7 @@ class AVLNode extends Node{
     
     // 트리의 균형을 확인할 때마다 사용
     public int getBalanceFactor() {
+        updateHeight();
         return this.leftHeight - this.rightHeight;
     }
 
