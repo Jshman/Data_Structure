@@ -110,6 +110,15 @@ class AVL extends BST {
         return node;
     }
 
+    public AVLNode delete(int data) {return delete(new AVLNode(data));}
+    public AVLNode delete(AVLNode deleteNode) {
+        AVLNode dn = (AVLNode) super.delete(deleteNode);
+        AVLNode dnParent = (AVLNode) dn.getParent();
+
+        // 
+
+        return deleteNode;
+    }
 
     public void inOrder() {
         /* 중위 순회 : 왼쪽자식 - 노드 - 오른쪽자식 순으로 순회한다. */

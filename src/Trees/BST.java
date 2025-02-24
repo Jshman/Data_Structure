@@ -52,7 +52,7 @@ public class BST {
         if (parent.getLeft().getData() == targetNode.getData()) {parent.setLeft(null);}
         else {parent.setRight(null);}
 
-        targetNode.setParent(null);
+        // targetNode.setParent(null); //AVL트리의 delete를 위해서
 
         return targetNode;
     }
@@ -82,7 +82,7 @@ public class BST {
 
         targetNodeChild.setParent(parent);
 
-        targetNode.setParent(null);
+        // targetNode.setParent(null); //AVL트리의 delete를 위해서
         targetNode.setLeft(null);
         targetNode.setRight(null);
 
@@ -114,6 +114,8 @@ public class BST {
         //targetNode의 양쪽자식을 null로 설정한다.
         targetNode.setLeft(null);
         targetNode.setRight(null);
+
+        //targetNode.setParent(); //AVL트리의 delete를 위해서
 
         // 지우려는 노드가 root 노드라면
         if (parent == null) {setRoot(rightSubTreeNode);}
@@ -150,7 +152,7 @@ public class BST {
         rightNode.setLeft(targetNode.getLeft());
         targetNode.getLeft().setParent(rightNode);
         
-        targetNode.setParent(null);
+        // targetNode.setParent(null); //AVL트리의 delete를 위해서
         targetNode.setRight(null);
         targetNode.setLeft(null);
     
